@@ -25,6 +25,8 @@ export const TemplateBuilder = () => {
       // If there are saved configurations, merge them with initial elements
       if (response.data.emailConfig) {
         setEmailConfig(response.data.emailConfig);
+        setSelectedElement(emailConfig[1]);
+        console.log("set:",selectedElement);
       }
     } catch (error) {
       console.error("Error fetching layout: ", error);
