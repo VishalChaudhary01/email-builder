@@ -5,6 +5,8 @@ import { IEmailConfig, IStyleProperties } from "@/types";
 import { RenderElement } from "./RenderElement";
 import { Editor } from "./Editor";
 import { renderLayout } from "@/lib/renderLayout";
+import { Button } from "./ui/button";
+import { transformConfig } from "@/lib/utils";
 
 export const TemplateBuilder = () => {
   const [layout, setLayout] = useState<string>("");
@@ -48,20 +50,19 @@ export const TemplateBuilder = () => {
     );
   };
 
-  // const saveTemplate = async () => {
-  //   try {
-  //     await axios.post("/api/email/saveTemplate", {
-  //       emailConfig,
-  //       layout
-  //     });
-  //   } catch (error) {
-  //     console.error("Error saving template:", error);
-  //   }
-  // };
+  const saveTemplate = async () => {
+    try {
+      const transformedConfig = transformConfig(emailConfig);
+      const resopnse = await axios.post("/api/email/saveEmailConfig", transformedConfig);
+      console.log(resopnse);
+    } catch (error) {
+      console.error("Error saving template:", error);
+    }
+  };
 
   return (
     <div className="w-full flex gap-4 min-h-screen">
-      <div className="w-2/3 space-y-12">
+      <div className="w-2/3 space-y-12 mb-6">
         <div>
           <h2 className="text-center text-3xl font-bold text-gray-700 mb-2">
             Edit the content of email template
@@ -74,14 +75,18 @@ export const TemplateBuilder = () => {
             ))}
           </div>
         </div>
-        <div>
-          <h2 className="text-center text-3xl font-bold text-gray-700 mb-2">
+        <div className="flex flex-col gap-2">
+          <h2 className="text-center text-3xl font-bold text-gray-700">
             Preview
           </h2>
           <div
             dangerouslySetInnerHTML={{ __html: renderLayout(layout, emailConfig) }}
             className="w-full"
           ></div>
+          <div className="flex items-center justify-center gap-4">
+            <Button onClick={saveTemplate} className="w-36 md:w-60">Save</Button>
+            <Button onClick={saveTemplate} className="w-36 md:w-60">Download</Button>
+          </div>
         </div>
       </div>
       <Editor selectedElement={selectedElement} updateElementStyle={updateElementStyle} />

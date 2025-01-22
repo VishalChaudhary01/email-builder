@@ -1,4 +1,4 @@
-export type IFontSize = "sm" | "md" | "lg" | "xl" | "2xl";
+export type IFontSize = "sm" | "md" | "lg" | "xl" | "2xl" | "3xl" | "4xl" | "5xl";
 export type IFontWeight = "normal" | "medium" | "semibold" | "bold";
 export type ITextAlign = "left" | "center" | "right";
 export type ITextTransform = "none" | "uppercase" | "lowercase" | "capitalize";

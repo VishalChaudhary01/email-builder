@@ -1,17 +1,7 @@
 import { Request, Response } from 'express';
 import path from 'path';
 import fs from 'fs';
-import { EmailTemplate } from '../models/EmailTemplate';
-import multer from 'multer';
-
-export const storage = multer.diskStorage({
-     destination: (req, file, cb) => {
-          cb(null, 'uploads/');
-     },
-     filename: (req, file, cb) => {
-          cb(null, Date.now() + path.extname(file.originalname));
-     }
-});
+import { EmailConfig } from '../models/EmailConfig';
 
 export const getEmailLayout = async (req: Request, res: Response) => {
      try {
@@ -24,13 +14,14 @@ export const getEmailLayout = async (req: Request, res: Response) => {
      }
 }
 
-export const saveEmailTemplate = async (req: Request, res: Response) => {
+export const saveEmailConfig = async (req: Request, res: Response) => {
      try {
-          const template = new EmailTemplate(req.body);
-          await template.save();
-          res.status(201).json({ success: true, message: 'Template saved successfully' });
+          // TODO -> need to add zod validation
+          const config = new EmailConfig(req.body);
+          await config.save();
+          res.status(201).json({ success: true, message: 'Email config saved successfully' });
      } catch (error) {
-          console.log('❌ Error during fetch email layout: ', error);
-          res.status(500).json({ success: false, error: 'Failed to fetch email layout.'});
+          console.log('❌ Error during save email configs: ', error);
+          res.status(500).json({ success: false, error: 'Failed to save email configs.'});
      }
 }

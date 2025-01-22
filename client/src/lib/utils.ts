@@ -22,11 +22,9 @@ export const getElementStyles = (element: IEmailConfig): React.CSSProperties => 
   };
 }
 
-
 export const formatStyleProperty = (key: string, value: string | number): string => {
   // Convert camelCase to kebab-case
   const formatKey = key.replace(/([A-Z])/g, '-$1').toLowerCase();
-  
   // Add units to numeric values where needed
   switch (formatKey) {
     case 'font-size':
@@ -41,5 +39,22 @@ export const formatStyleProperty = (key: string, value: string | number): string
       return `${formatKey}: ${value}`;
     default:
       return `${formatKey}: ${value}`;
+  }
+};
+
+export const transformConfig = (emailConfig: IEmailConfig[]) => {
+  return {
+    logo: {
+      value: emailConfig.find(el => el.name === "logo")?.value || "",
+      styles: emailConfig.find(el => el.name === "logo")?.styles
+    },
+    title: {
+      value: emailConfig.find(el => el.name === "title")?.value || "",
+      styles: emailConfig.find(el => el.name === "title")?.styles
+    },
+    content: {
+      value: emailConfig.find(el => el.name === "content")?.value || "",
+      styles: emailConfig.find(el => el.name === "content")?.styles
+    }
   }
 };

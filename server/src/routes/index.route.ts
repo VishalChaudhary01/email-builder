@@ -1,10 +1,10 @@
 import express from 'express';
-import { getEmailLayout, saveEmailTemplate } from '../controllers/index.controller';
+import { getEmailLayout, saveEmailConfig } from '../controllers/index.controller';
 
 const router = express.Router();
 
 router.get('/getEmailLayout', getEmailLayout);
-router.post('/uploadEmailConfig', saveEmailTemplate);
+router.post('/saveEmailConfig', saveEmailConfig);
 // router.post('/uploadImage');
 // router.post('/renderAndDownloadTemplate', )
 
