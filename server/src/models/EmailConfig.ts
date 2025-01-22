@@ -37,7 +37,7 @@ enum TextAlign {
   justify = 'justify'
 }
 
-interface IStyles {
+export interface IStyles {
   fontSize?: FontSize;
   fontWeight?: FontWeight;
   color?: string;
@@ -50,7 +50,7 @@ interface IStyledComponent {
   styles?: IStyles;
 }
 
-interface IImageStyles {
+export interface IImageStyles {
   width?: number;
   height?: number;
 }

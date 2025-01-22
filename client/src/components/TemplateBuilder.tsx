@@ -53,12 +53,29 @@ export const TemplateBuilder = () => {
   const saveTemplate = async () => {
     try {
       const transformedConfig = transformConfig(emailConfig);
-      const resopnse = await axios.post("/api/email/saveEmailConfig", transformedConfig);
-      console.log(resopnse);
+      const response = await axios.post("/api/email/saveEmailConfig", transformedConfig);
+      console.log(response);
     } catch (error) {
       console.error("Error saving template:", error);
     }
   };
+
+  const downloadHTMLTemplate = async () => {
+    try {
+      const response = await axios.post("/api/email/renderAndDownloadTemplate", emailConfig);
+      const blob = new Blob([response?.data]);
+      const url = window.URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = 'email-template.html';
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+      window.URL.revokeObjectURL(url);
+    } catch (error) {
+      console.error("Error during download html template:", error);
+    }
+  }
 
   return (
     <div className="w-full flex gap-4 min-h-screen">
@@ -85,7 +102,7 @@ export const TemplateBuilder = () => {
           ></div>
           <div className="flex items-center justify-center gap-4">
             <Button onClick={saveTemplate} className="w-36 md:w-60">Save</Button>
-            <Button onClick={saveTemplate} className="w-36 md:w-60">Download</Button>
+            <Button onClick={downloadHTMLTemplate} className="w-36 md:w-60">Download</Button>
           </div>
         </div>
       </div>
