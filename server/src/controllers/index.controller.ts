@@ -6,7 +6,15 @@ import { formatStyleProperty } from '../config/formatSyleProperty';
 
 export const getEmailLayout = async (req: Request, res: Response) => {
      try {
-          const layoutPath = path.join(__dirname, '..' ,'templates', 'layout.html');
+          const layoutPath = path.resolve(__dirname, '..', 'templates', 'layout.html');
+          if (!fs.existsSync(layoutPath)) {
+               res.status(404).json({ 
+                    success: false, 
+                    error: 'Layout file not found',
+                    path: layoutPath 
+               });
+               return;
+          }
           const layout = await fs.promises.readFile(layoutPath, 'utf8');
           res.json({ success: true, layout });
      } catch (error) {
