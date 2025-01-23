@@ -11,7 +11,7 @@ import { transformConfig } from "@/lib/utils";
 export const TemplateBuilder = () => {
   const [layout, setLayout] = useState<string>("");
   const [emailConfig, setEmailConfig] = useState<IEmailConfig[]>(initialEmailElements);
-  const [selectedElement, setSelectedElement] = useState<IEmailConfig | null>(null);
+  const [selectedElement, setSelectedElement] = useState<IEmailConfig>(emailConfig[1]);
 
   useEffect(() => {
     fetchLayout();
@@ -25,8 +25,6 @@ export const TemplateBuilder = () => {
       // If there are saved configurations, merge them with initial elements
       if (response.data.emailConfig) {
         setEmailConfig(response.data.emailConfig);
-        setSelectedElement(emailConfig[1]);
-        console.log("set:",selectedElement);
       }
     } catch (error) {
       console.error("Error fetching layout: ", error);
